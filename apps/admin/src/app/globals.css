@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-be-vietnam-pro);
+  --font-mono: var(--font-be-vietnam-pro);
+}
+
+@layer base {
+  :root {
+    /* Primary Colors - Blue */
+    --primary: 217 91% 60%; /* blue-500 #3b82f6 */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 221 83% 53%; /* blue-600 #2563eb */
+    
+    /* Success Colors - Green */
+    --success: 142 71% 45%; /* green-500 #22c55e */
+    --success-foreground: 0 0% 100%;
+    --success-hover: 142 76% 36%; /* green-600 #16a34a */
+    
+    /* Error/Danger Colors - Red */
+    --destructive: 0 84% 60%; /* red-500 #ef4444 */
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 0 72% 51%; /* red-600 #dc2626 */
+    
+    /* Background Colors */
+    --background: 0 0% 100%; /* white */
+    --foreground: 0 0% 9%; /* zinc-900 */
+    
+    /* Card & Popover */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    
+    /* Secondary & Muted */
+    --secondary: 240 5% 96%; /* zinc-50 */
+    --secondary-foreground: 0 0% 9%;
+    --muted: 240 5% 96%; /* zinc-50 */
+    --muted-foreground: 240 4% 46%; /* zinc-600 */
+    
+    /* Accent */
+    --accent: 217 91% 60%; /* blue-500 */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Border & Input */
+    --border: 240 6% 90%; /* zinc-200 */
+    --input: 240 6% 90%;
+    --ring: 217 91% 60%; /* blue-500 */
+    
+    --radius: 0.5rem;
+  }
+}
+
+body {
+  font-family: var(--font-be-vietnam-pro), sans-serif;
+  background-color: #ffffff;
+  color: #171717;
+  /* Grid Pattern Background */
+  background-image: linear-gradient(rgba(224, 224, 224, 0.3) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(224, 224, 224, 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+}
+
+* {
+  border-color: rgb(228 228 231); /* zinc-200 */
+}
+
+/* Gradient Classes */
+.gradient-blue {
+  background: linear-gradient(to bottom right, #0284c7, #2563eb, #4f46e5);
+}
+
+.gradient-yellow-orange {
+  background: linear-gradient(to bottom right, #facc15, #f97316, #ec4899);
+}
+
+.gradient-blue-indigo {
+  background: linear-gradient(to bottom right, #3b82f6, #6366f1);
+}
+
+.gradient-blue-indigo-light {
+  background: linear-gradient(to bottom right, #eff6ff, #eef2ff);
+}

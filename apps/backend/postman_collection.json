@@ -1,0 +1,861 @@
+{
+  "info": {
+    "name": "Local Service Platform API",
+    "description": "Complete API Collection - 58 Endpoints (Member 1 & 2)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {"key": "BASE_URL", "value": "http://localhost:3000", "type": "string"},
+    {"key": "CUSTOMER_ACCESS_TOKEN", "value": "", "type": "string"},
+    {"key": "CUSTOMER_REFRESH_TOKEN", "value": "", "type": "string"},
+    {"key": "PROVIDER_ACCESS_TOKEN", "value": "", "type": "string"},
+    {"key": "PROVIDER_REFRESH_TOKEN", "value": "", "type": "string"},
+    {"key": "ADMIN_ACCESS_TOKEN", "value": "", "type": "string"},
+    {"key": "BOOKING_ID", "value": "", "type": "string"},
+    {"key": "ADDRESS_ID", "value": "", "type": "string"},
+    {"key": "CATEGORY_ID", "value": "", "type": "string"},
+    {"key": "SERVICE_ID", "value": "", "type": "string"}
+  ],
+  "item": [
+    {
+      "name": "1. Authentication (9 endpoints)",
+      "item": [
+        {
+          "name": "1.1 Register Customer",
+          "event": [{
+            "listen": "test",
+            "script": {"exec": ["console.log('✅ User registered. Check console for OTP code!');"]}
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84999111222\",\n  \"password\": \"Customer123!@#\",\n  \"fullName\": \"Nguyen Van Customer\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/register", "host": ["{{BASE_URL}}"], "path": ["auth", "register"]}
+          }
+        },
+        {
+          "name": "1.2 Register Provider",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84988222333\",\n  \"password\": \"Provider123!@#\",\n  \"fullName\": \"ABC Service Provider\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/register", "host": ["{{BASE_URL}}"], "path": ["auth", "register"]}
+          }
+        },
+        {
+          "name": "1.3 Verify OTP (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84999111222\",\n  \"code\": \"123456\",\n  \"purpose\": \"verify_phone\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/verify-otp", "host": ["{{BASE_URL}}"], "path": ["auth", "verify-otp"]}
+          }
+        },
+        {
+          "name": "1.4 Verify OTP (Provider)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84988222333\",\n  \"code\": \"123456\",\n  \"purpose\": \"verify_phone\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/verify-otp", "host": ["{{BASE_URL}}"], "path": ["auth", "verify-otp"]}
+          }
+        },
+        {
+          "name": "1.5 Login Customer",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "if (response.data && response.data.accessToken) {",
+                "  pm.collectionVariables.set('CUSTOMER_ACCESS_TOKEN', response.data.accessToken);",
+                "  pm.collectionVariables.set('CUSTOMER_REFRESH_TOKEN', response.data.refreshToken);",
+                "  console.log('✅ Customer token saved');",
+                "}"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84999111222\",\n  \"password\": \"Customer123!@#\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/login", "host": ["{{BASE_URL}}"], "path": ["auth", "login"]}
+          }
+        },
+        {
+          "name": "1.6 Login Provider",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "if (response.data && response.data.accessToken) {",
+                "  pm.collectionVariables.set('PROVIDER_ACCESS_TOKEN', response.data.accessToken);",
+                "  pm.collectionVariables.set('PROVIDER_REFRESH_TOKEN', response.data.refreshToken);",
+                "  console.log('✅ Provider token saved');",
+                "}"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84988222333\",\n  \"password\": \"Provider123!@#\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/login", "host": ["{{BASE_URL}}"], "path": ["auth", "login"]}
+          }
+        },
+        {
+          "name": "1.7 Send OTP for Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84999111222\",\n  \"purpose\": \"login\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/send-otp", "host": ["{{BASE_URL}}"], "path": ["auth", "send-otp"]}
+          }
+        },
+        {
+          "name": "1.8 Login with OTP",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+84999111222\",\n  \"code\": \"654321\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/login-otp", "host": ["{{BASE_URL}}"], "path": ["auth", "login-otp"]}
+          }
+        },
+        {
+          "name": "1.9 Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{CUSTOMER_REFRESH_TOKEN}}\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/refresh-token", "host": ["{{BASE_URL}}"], "path": ["auth", "refresh-token"]}
+          }
+        },
+        {
+          "name": "1.10 Logout",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{CUSTOMER_REFRESH_TOKEN}}\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/auth/logout", "host": ["{{BASE_URL}}"], "path": ["auth", "logout"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Users (11 endpoints)",
+      "item": [
+        {
+          "name": "2.1 Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me", "host": ["{{BASE_URL}}"], "path": ["users", "me"]}
+          }
+        },
+        {
+          "name": "2.2 Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Nguyen Van Customer Updated\",\n  \"bio\": \"I love using local services\",\n  \"gender\": \"male\",\n  \"birthDate\": \"1990-05-15\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/profile", "host": ["{{BASE_URL}}"], "path": ["users", "me", "profile"]}
+          }
+        },
+        {
+          "name": "2.3 Change Password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"Customer123!@#\",\n  \"newPassword\": \"NewCustomer123!@#\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/password", "host": ["{{BASE_URL}}"], "path": ["users", "me", "password"]}
+          }
+        },
+        {
+          "name": "2.4 Get Addresses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me/addresses", "host": ["{{BASE_URL}}"], "path": ["users", "me", "addresses"]}
+          }
+        },
+        {
+          "name": "2.5 Add Address",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "console.log('✅ Address added');"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"Home\",\n  \"addressText\": \"123 Nguyen Hue, District 1, HCMC\",\n  \"isDefault\": true\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/addresses", "host": ["{{BASE_URL}}"], "path": ["users", "me", "addresses"]}
+          }
+        },
+        {
+          "name": "2.6 Update Address",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"Home (Updated)\",\n  \"addressText\": \"456 Le Loi, District 1, HCMC\",\n  \"isDefault\": true\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/addresses/1", "host": ["{{BASE_URL}}"], "path": ["users", "me", "addresses", "1"]}
+          }
+        },
+        {
+          "name": "2.7 Delete Address",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me/addresses/1", "host": ["{{BASE_URL}}"], "path": ["users", "me", "addresses", "1"]}
+          }
+        },
+        {
+          "name": "2.8 Get Favorites",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me/favorites", "host": ["{{BASE_URL}}"], "path": ["users", "me", "favorites"]}
+          }
+        },
+        {
+          "name": "2.9 Add Favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetType\": \"provider\",\n  \"targetId\": 2\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/favorites", "host": ["{{BASE_URL}}"], "path": ["users", "me", "favorites"]}
+          }
+        },
+        {
+          "name": "2.10 Remove Favorite",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {
+              "raw": "{{BASE_URL}}/users/me/favorites/2?type=provider",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users", "me", "favorites", "2"],
+              "query": [{"key": "type", "value": "provider"}]
+            }
+          }
+        },
+        {
+          "name": "2.11 Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me/notifications", "host": ["{{BASE_URL}}"], "path": ["users", "me", "notifications"]}
+          }
+        },
+        {
+          "name": "2.12 Mark All Notifications Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/users/me/notifications/read-all", "host": ["{{BASE_URL}}"], "path": ["users", "me", "notifications", "read-all"]}
+          }
+        },
+        {
+          "name": "2.13 Register Device (FCM)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fcmToken\": \"fCm_TokEn_123456789_abcdefg\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/users/me/devices", "host": ["{{BASE_URL}}"], "path": ["users", "me", "devices"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. System (6 endpoints)",
+      "item": [
+        {
+          "name": "3.1 Get Public Settings",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/system/settings/public", "host": ["{{BASE_URL}}"], "path": ["system", "settings", "public"]}
+          }
+        },
+        {
+          "name": "3.2 Upload File",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [{"key": "file", "type": "file", "src": ""}]
+            },
+            "url": {"raw": "{{BASE_URL}}/system/upload", "host": ["{{BASE_URL}}"], "path": ["system", "upload"]}
+          }
+        },
+        {
+          "name": "3.3 Get Presigned URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filename\": \"avatar.jpg\",\n  \"contentType\": \"image/jpeg\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/system/upload/presigned-url", "host": ["{{BASE_URL}}"], "path": ["system", "upload", "presigned-url"]}
+          }
+        },
+        {
+          "name": "3.4 [Admin] Get Setting",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/system/admin/settings/platform_fee_percent", "host": ["{{BASE_URL}}"], "path": ["system", "admin", "settings", "platform_fee_percent"]}
+          }
+        },
+        {
+          "name": "3.5 [Admin] Upsert Setting",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"test_setting\",\n  \"value\": {\"enabled\": true},\n  \"description\": \"Test setting\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/system/admin/settings", "host": ["{{BASE_URL}}"], "path": ["system", "admin", "settings"]}
+          }
+        },
+        {
+          "name": "3.6 [Admin] Delete Setting",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/system/admin/settings/test_setting", "host": ["{{BASE_URL}}"], "path": ["system", "admin", "settings", "test_setting"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Services & Categories (10 endpoints)",
+      "item": [
+        {
+          "name": "4.1 Get All Categories (Tree)",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/services/categories", "host": ["{{BASE_URL}}"], "path": ["services", "categories"]}
+          }
+        },
+        {
+          "name": "4.2 Get Category by ID",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/services/categories/1", "host": ["{{BASE_URL}}"], "path": ["services", "categories", "1"]}
+          }
+        },
+        {
+          "name": "4.3 [Admin] Create Category",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "if (response.data && response.data.id) {",
+                "  pm.collectionVariables.set('CATEGORY_ID', response.data.id);",
+                "}"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Category\",\n  \"code\": \"test_cat\",\n  \"slug\": \"test-category\",\n  \"description\": \"Test category\",\n  \"parentId\": 1\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/services/categories", "host": ["{{BASE_URL}}"], "path": ["services", "categories"]}
+          }
+        },
+        {
+          "name": "4.4 [Admin] Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Category\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/services/categories/{{CATEGORY_ID}}", "host": ["{{BASE_URL}}"], "path": ["services", "categories", "{{CATEGORY_ID}}"]}
+          }
+        },
+        {
+          "name": "4.5 [Admin] Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/services/categories/{{CATEGORY_ID}}", "host": ["{{BASE_URL}}"], "path": ["services", "categories", "{{CATEGORY_ID}}"]}
+          }
+        },
+        {
+          "name": "4.6 Search Services",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/services/search?keyword=điều hòa&minPrice=100000&maxPrice=500000&page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["services", "search"],
+              "query": [
+                {"key": "keyword", "value": "điều hòa"},
+                {"key": "minPrice", "value": "100000"},
+                {"key": "maxPrice", "value": "500000"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.7 Get Service by ID",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/services/1", "host": ["{{BASE_URL}}"], "path": ["services", "1"]}
+          }
+        },
+        {
+          "name": "4.8 [Admin] Create Service",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "if (response.data && response.data.id) {",
+                "  pm.collectionVariables.set('SERVICE_ID', response.data.id);",
+                "}"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Service\",\n  \"categoryId\": 1,\n  \"basePrice\": 180000,\n  \"description\": \"Test service for demo\",\n  \"durationMinutes\": 90\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/services", "host": ["{{BASE_URL}}"], "path": ["services"]}
+          }
+        },
+        {
+          "name": "4.9 [Admin] Update Service",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Service\",\n  \"basePrice\": 200000\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/services/{{SERVICE_ID}}", "host": ["{{BASE_URL}}"], "path": ["services", "{{SERVICE_ID}}"]}
+          }
+        },
+        {
+          "name": "4.10 [Admin] Delete Service",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/services/{{SERVICE_ID}}", "host": ["{{BASE_URL}}"], "path": ["services", "{{SERVICE_ID}}"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Provider (7 endpoints)",
+      "item": [
+        {
+          "name": "5.1 Provider Onboarding",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"ABC Cleaning Service\",\n  \"bio\": \"Professional cleaning with 10 years experience\",\n  \"skills\": [\"cleaning\", \"deep-cleaning\", \"sanitization\"],\n  \"serviceRadiusM\": 15000\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/onboarding", "host": ["{{BASE_URL}}"], "path": ["provider", "onboarding"]}
+          }
+        },
+        {
+          "name": "5.2 Get Provider Profile",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/me", "host": ["{{BASE_URL}}"], "path": ["provider", "me"]}
+          }
+        },
+        {
+          "name": "5.3 Update Provider Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"ABC Cleaning (Updated)\",\n  \"bio\": \"Updated bio\",\n  \"serviceRadiusM\": 20000\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/me", "host": ["{{BASE_URL}}"], "path": ["provider", "me"]}
+          }
+        },
+        {
+          "name": "5.4 Update Provider Location",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitude\": 10.762622,\n  \"longitude\": 106.660172,\n  \"addressText\": \"123 Nguyen Hue, District 1, HCMC\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/me/location", "host": ["{{BASE_URL}}"], "path": ["provider", "me", "location"]}
+          }
+        },
+        {
+          "name": "5.5 Update Availability",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isAvailable\": true\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/me/availability", "host": ["{{BASE_URL}}"], "path": ["provider", "me", "availability"]}
+          }
+        },
+        {
+          "name": "5.6 Add Service to Provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceId\": 1,\n  \"price\": 250000,\n  \"currency\": \"VND\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/services", "host": ["{{BASE_URL}}"], "path": ["provider", "services"]}
+          }
+        },
+        {
+          "name": "5.7 Update Provider Service",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 280000,\n  \"isActive\": true\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/provider/services/1", "host": ["{{BASE_URL}}"], "path": ["provider", "services", "1"]}
+          }
+        },
+        {
+          "name": "5.8 Remove Provider Service",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/services/1", "host": ["{{BASE_URL}}"], "path": ["provider", "services", "1"]}
+          }
+        },
+        {
+          "name": "5.9 Get Provider Statistics",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/statistics", "host": ["{{BASE_URL}}"], "path": ["provider", "statistics"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Bookings (10 endpoints)",
+      "item": [
+        {
+          "name": "6.1 Estimate Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceId\": 1,\n  \"scheduledAt\": \"2025-11-30T10:00:00Z\",\n  \"latitude\": 10.772622,\n  \"longitude\": 106.670172\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/bookings/estimate", "host": ["{{BASE_URL}}"], "path": ["bookings", "estimate"]}
+          }
+        },
+        {
+          "name": "6.2 Create Booking",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const response = pm.response.json();",
+                "if (response.data && response.data.id) {",
+                "  pm.collectionVariables.set('BOOKING_ID', response.data.id);",
+                "  console.log('✅ Booking created:', response.data.id);",
+                "}"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceId\": 1,\n  \"providerId\": 2,\n  \"latitude\": 10.772622,\n  \"longitude\": 106.670172,\n  \"addressText\": \"123 Nguyen Hue, District 1, HCMC\",\n  \"scheduledAt\": \"2025-11-30T10:00:00Z\",\n  \"notes\": \"Please bring cleaning supplies\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/bookings", "host": ["{{BASE_URL}}"], "path": ["bookings"]}
+          }
+        },
+        {
+          "name": "6.3 Get My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {
+              "raw": "{{BASE_URL}}/bookings?status=pending&page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["bookings"],
+              "query": [
+                {"key": "status", "value": "pending"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "6.4 Get Booking Detail",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/bookings/{{BOOKING_ID}}", "host": ["{{BASE_URL}}"], "path": ["bookings", "{{BOOKING_ID}}"]}
+          }
+        },
+        {
+          "name": "6.5 [Provider] Accept Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/bookings/{{BOOKING_ID}}/accept", "host": ["{{BASE_URL}}"], "path": ["provider", "bookings", "{{BOOKING_ID}}", "accept"]}
+          }
+        },
+        {
+          "name": "6.6 [Provider] Start Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/bookings/{{BOOKING_ID}}/start", "host": ["{{BASE_URL}}"], "path": ["provider", "bookings", "{{BOOKING_ID}}", "start"]}
+          }
+        },
+        {
+          "name": "6.7 [Provider] Complete Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{PROVIDER_ACCESS_TOKEN}}"}],
+            "url": {"raw": "{{BASE_URL}}/provider/bookings/{{BOOKING_ID}}/complete", "host": ["{{BASE_URL}}"], "path": ["provider", "bookings", "{{BOOKING_ID}}", "complete"]}
+          }
+        },
+        {
+          "name": "6.8 [Customer] Review Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Excellent service! Very professional and punctual.\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/bookings/{{BOOKING_ID}}/review", "host": ["{{BASE_URL}}"], "path": ["bookings", "{{BOOKING_ID}}", "review"]}
+          }
+        },
+        {
+          "name": "6.9 [Customer] Cancel Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{CUSTOMER_ACCESS_TOKEN}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Changed my mind\"\n}"
+            },
+            "url": {"raw": "{{BASE_URL}}/bookings/{{BOOKING_ID}}/cancel", "host": ["{{BASE_URL}}"], "path": ["bookings", "{{BOOKING_ID}}", "cancel"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Marketplace (5 endpoints)",
+      "item": [
+        {
+          "name": "7.1 Search Services (Location-Based)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/marketplace/services/search?keyword=cleaning&latitude=10.762622&longitude=106.660172&radiusMeters=10000&minRating=4&page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["marketplace", "services", "search"],
+              "query": [
+                {"key": "keyword", "value": "cleaning"},
+                {"key": "latitude", "value": "10.762622"},
+                {"key": "longitude", "value": "106.660172"},
+                {"key": "radiusMeters", "value": "10000"},
+                {"key": "minRating", "value": "4"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "7.2 Get Categories",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/marketplace/categories", "host": ["{{BASE_URL}}"], "path": ["marketplace", "categories"]}
+          }
+        },
+        {
+          "name": "7.3 Get Category by Slug",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/marketplace/categories/dien-lanh", "host": ["{{BASE_URL}}"], "path": ["marketplace", "categories", "dien-lanh"]}
+          }
+        },
+        {
+          "name": "7.4 Get Provider Details",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{BASE_URL}}/marketplace/providers/2", "host": ["{{BASE_URL}}"], "path": ["marketplace", "providers", "2"]}
+          }
+        },
+        {
+          "name": "7.5 Get Provider Reviews",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/marketplace/providers/2/reviews?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["marketplace", "providers", "2", "reviews"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

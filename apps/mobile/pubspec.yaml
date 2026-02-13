@@ -1,0 +1,76 @@
+name: mobile
+description: Local Service Platform - Modern service marketplace app
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management - Bloc
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  equatable: ^2.0.5
+
+  # State Management - Riverpod
+  riverpod: ^2.4.0
+  flutter_riverpod: ^2.4.0
+
+  # Code Generation
+  freezed_annotation: ^2.4.0
+  json_annotation: ^4.8.0
+
+  # HTTP & API
+  dio: ^5.4.3
+
+  # UI & Design
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10
+  cached_network_image: ^3.3.1
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Utils
+  intl: ^0.19.0
+
+  # Secure Storage
+  flutter_secure_storage: ^9.0.0
+
+  # Location
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+
+  # Image Picker
+  image_picker: ^1.0.4
+
+  # Icons
+  cupertino_icons: ^1.0.8
+  shimmer: ^3.0.0
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  url_launcher: ^6.3.2
+  socket_io_client: ^3.1.3
+  audioplayers: ^6.5.1
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  
+  # Code Generation for Freezed & JSON
+  build_runner: ^2.4.0
+  freezed: ^2.4.0
+  json_serializable: ^6.7.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
