@@ -127,7 +127,18 @@ export class ProviderController {
       },
     },
   })
-  ///// Note: The uploaded file will be saved to disk by Multer, and the file path will be stored in the database.
+  async uploadAvatar(
+    @CurrentUser() user: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+    return this.providerService.updateAvatar(
+      BigInt(user.userId),
+      `/uploads/avatars/${file.filename}`,
+    );
+  }
 
   @Patch('me/availability')
   @UseGuards(RolesGuard, ProviderVerifiedGuard)
