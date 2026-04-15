@@ -52,7 +52,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 ---
 
-## 🔐 MODULE 1: USER & AUTH (4 bảng)
+##  MODULE 1: USER & AUTH (4 bảng)
 
 ### 1.1 `users` - Tài khoản Người dùng
 
@@ -81,7 +81,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 - `(status)` - Filter theo trạng thái
 - `(phone, status)` - Composite cho query phổ biến
 
-**⚠️ Cải tiến quan trọng:** Thêm soft delete
+** Cải tiến quan trọng:** Thêm soft delete
 - Bổ sung: `deleted_at` (TIMESTAMPTZ, NULL)
 
 ---
@@ -127,7 +127,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 **Index:**
 - `(phone, purpose, used)` - Query OTP còn hiệu lực
 
-**⚠️ Security Rules:**
+** Security Rules:**
 1. **Hash OTP:** Sử dụng SHA256 hash thay vì lưu plaintext
 2. **Rate Limiting:** Max 5 lần thử (`attempt_count <= 5`)
 3. **Cooldown:** Giới hạn tạo OTP mới (1 OTP/60s cho mỗi phone)
@@ -270,7 +270,7 @@ user → user_roles → roles → role_permissions → permissions
 - `(is_available)` - Filter thợ sẵn sàng
 - `(verification_status)` - Filter thợ đã verify
 
-**⚠️ Cải tiến quan trọng:**
+** Cải tiến quan trọng:**
 - **Rating tự động:** `rating_avg` và `rating_count` được update tự động bởi trigger khi có review mới
 - **Trigger logic:**
   ```
@@ -1230,7 +1230,7 @@ Action:
 
 ---
 
-## 📞 KẾT LUẬN
+##  KẾT LUẬN
 
 Database này được thiết kế để:
 
