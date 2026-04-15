@@ -341,10 +341,14 @@ class Booking {
   final int? providerId;
   final List<Map<String, dynamic>>?
       selectedItems; // Items pre-selected by customer
+  final List<String>? customerImages; // Images uploaded by customer
   final String? paymentStatus;
   final String? paymentMethod;
   final String? bookingPaymentId;
   final DateTime? autoReleaseAt;
+  final bool hasPendingQuote;
+  final bool isQuoteAccepted;
+  final String? acceptedPrice;
 
   Booking({
     required this.id,
@@ -371,10 +375,14 @@ class Booking {
     this.serviceId,
     this.providerId,
     this.selectedItems,
+    this.customerImages,
     this.paymentStatus,
     this.paymentMethod,
     this.bookingPaymentId,
     this.autoReleaseAt,
+    this.hasPendingQuote = false,
+    this.isQuoteAccepted = false,
+    this.acceptedPrice,
   });
 
   /// Get the final price (actualPrice takes precedence over estimatedPrice)
@@ -387,6 +395,14 @@ class Booking {
       selectedItems = (json['selectedItems'] as List)
           .map((item) => Map<String, dynamic>.from(item as Map))
           .toList();
+    }
+
+    // Parse customerImages if present
+    List<String>? customerImages;
+    if (json['customerImages'] != null && json['customerImages'] is List) {
+      customerImages = List<String>.from(json['customerImages']);
+    } else if (json['images'] != null && json['images'] is List) {
+      customerImages = List<String>.from(json['images']);
     }
 
     return Booking(
@@ -423,12 +439,16 @@ class Booking {
       serviceId: _parseIntSafe(json['serviceId'] ?? json['service']?['id']),
       providerId: _parseIntSafe(json['providerId'] ?? json['provider']?['id']),
       selectedItems: selectedItems,
+      customerImages: customerImages,
       paymentStatus: json['paymentStatus'],
       paymentMethod: json['paymentMethod'],
       bookingPaymentId: json['bookingPaymentId']?.toString(),
       autoReleaseAt: json['autoReleaseAt'] != null
           ? DateTime.tryParse(json['autoReleaseAt'].toString())
           : null,
+      hasPendingQuote: json['hasPendingQuote'] == true,
+      isQuoteAccepted: json['isQuoteAccepted'] == true,
+      acceptedPrice: json['acceptedPrice']?.toString(),
     );
   }
 

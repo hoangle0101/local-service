@@ -21,6 +21,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
 
   Map<String, dynamic>? _invoice;
   bool _isLoading = true;
+
   bool _isProcessing = false;
   String? _error;
 
@@ -253,12 +254,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
       color = AppColors.warning;
       icon = Icons.pending_rounded;
       text = 'Chờ thanh toán';
-      subText = 'Vui lòng hoàn tất thanh toán để kết thúc đơn';
+      subText = 'Vui lòng hoàn tất thanh toán để kết thúc đơn...';
     } else {
       color = AppColors.primary;
       icon = Icons.info_rounded;
       text = 'Đang xử lý';
-      subText = 'Trạng thái đơn hàng đang được cập nhật';
+      subText = 'Trạng thái đơn hàng đang được cập nhật...';
     }
 
     return Container(

@@ -202,24 +202,30 @@ class _CreateBookingScreenState extends State<CreateBookingScreen> {
                 _buildSliverAppBar(context),
                 SliverToBoxAdapter(
                   child: Form(
+                    
                     key: _formKey,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 8),
                       child: Column(
+
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildServiceInfo(),
+
                           const SizedBox(height: 32),
                           _buildSectionLabel('THỜI GIAN THỰC HIỆN'),
                           const SizedBox(height: 16),
+
                           _buildDateTimeSection(),
                           const SizedBox(height: 32),
                           // Service Items Selection (only for direct booking)
                           if (widget.providerId != null) ...[
                             _buildSectionLabel('CHỌN DỊCH VỤ CỤ THỂ'),
                             const SizedBox(height: 16),
+
                             _buildServiceItemsSection(),
+
                             const SizedBox(height: 32),
                           ],
                           _buildSectionLabel('ĐỊA ĐIỂM CỦA BẠN'),
