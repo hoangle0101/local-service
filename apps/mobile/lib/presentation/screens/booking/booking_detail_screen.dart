@@ -13,6 +13,7 @@ import '../../bloc/bookings/bookings_bloc.dart';
 import '../../bloc/bookings/bookings_event_state.dart';
 import '../../../core/services/socket_service.dart';
 import 'dart:async';
+
 import '../../widgets/minimalist_widgets.dart';
 import '../../widgets/booking_offers_dialog.dart';
 import '../provider/create_quote_screen.dart';

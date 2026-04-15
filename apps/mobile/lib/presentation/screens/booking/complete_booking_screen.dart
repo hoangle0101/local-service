@@ -19,6 +19,7 @@ class CompleteBookingScreen extends StatefulWidget {
   const CompleteBookingScreen({super.key});
 
   @override
+  
   State<CompleteBookingScreen> createState() => _CompleteBookingScreenState();
 }
 
@@ -35,7 +36,8 @@ class _CompleteBookingScreenState extends State<CompleteBookingScreen> {
   TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
 
   bool _useGPS = true;
-  double _latitude = 21.0285;
+  double _latitude = 21.0286;
+
   double _longitude = 105.8542;
 
   final TrackAsiaRepository _trackAsiaRepository = TrackAsiaRepository();
