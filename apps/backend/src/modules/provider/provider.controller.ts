@@ -75,7 +75,7 @@ const imageFileFilter = (req: any, file: any, callback: any) => {
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class ProviderController {
-  constructor(private providerService: ProviderService) {}
+  constructor(private providerService: ProviderService) { }
 
   @Post('onboarding')
   @ApiOperation({ summary: 'Register as provider' })
@@ -127,18 +127,7 @@ export class ProviderController {
       },
     },
   })
-  async uploadAvatar(
-    @CurrentUser() user: any,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    if (!file) {
-      throw new BadRequestException('No file uploaded');
-    }
-    return this.providerService.updateAvatar(
-      BigInt(user.userId),
-      `/uploads/avatars/${file.filename}`,
-    );
-  }
+  ///// Note: The uploaded file will be saved to disk by Multer, and the file path will be stored in the database.
 
   @Patch('me/availability')
   @UseGuards(RolesGuard, ProviderVerifiedGuard)
