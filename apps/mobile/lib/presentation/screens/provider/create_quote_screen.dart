@@ -639,4 +639,61 @@ class _AddItemSheetState extends State<_AddItemSheet> {
     );
     Navigator.pop(context);
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+      ),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Thêm mục dịch vụ / linh kiện',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          const SizedBox(height: 20),
+          MinTextField(
+            controller: _nameController,
+            label: 'Tên mục',
+            hint: 'Vd: Thay gas máy lạnh R32',
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: MinTextField(
+                  controller: _priceController,
+                  label: 'Đơn giá (VNĐ)',
+                  hint: '0',
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: MinTextField(
+                  controller: _quantityController,
+                  label: 'SL',
+                  hint: '1',
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          MinButton(text: 'Thêm', isFullWidth: true, onPressed: _add),
+        ],
+      ),
+    );
+  }
 }
