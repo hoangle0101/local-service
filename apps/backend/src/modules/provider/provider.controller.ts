@@ -75,7 +75,7 @@ const imageFileFilter = (req: any, file: any, callback: any) => {
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class ProviderController {
-  constructor(private providerService: ProviderService) {}
+  constructor(private providerService: ProviderService) { }
 
   @Post('onboarding')
   @ApiOperation({ summary: 'Register as provider' })

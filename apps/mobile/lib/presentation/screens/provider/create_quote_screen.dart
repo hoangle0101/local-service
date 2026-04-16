@@ -11,7 +11,7 @@ class CreateQuoteScreen extends StatefulWidget {
   final int? serviceId;
   final int? providerId;
   final List<Map<String, dynamic>>?
-      customerSelectedItems; // Items selected by customer
+  customerSelectedItems; // Items selected by customer
 
   const CreateQuoteScreen({
     super.key,
@@ -47,15 +47,17 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
     // Pre-populate items from customer selection
     if (widget.customerSelectedItems != null) {
       for (final item in widget.customerSelectedItems!) {
-        _items.add(QuoteItem(
-          name: item['name'] ?? '',
-          price: (item['price'] is num)
-              ? (item['price'] as num).toInt()
-              : int.tryParse(item['price'].toString()) ?? 0,
-          quantity: item['quantity'] ?? 1,
-          serviceItemId: item['id']?.toString(),
-          isFromCustomer: true,
-        ));
+        _items.add(
+          QuoteItem(
+            name: item['name'] ?? '',
+            price: (item['price'] is num)
+                ? (item['price'] as num).toInt()
+                : int.tryParse(item['price'].toString()) ?? 0,
+            quantity: item['quantity'] ?? 1,
+            serviceItemId: item['id']?.toString(),
+            isFromCustomer: true,
+          ),
+        );
       }
     }
     // Load provider's service items
@@ -144,14 +146,16 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
         bookingId: widget.bookingId,
         diagnosis: _diagnosisController.text,
         items: _items
-            .map((i) => {
-                  'name': i.name,
-                  'price': i.price,
-                  'quantity': i.quantity,
-                  'serviceItemId': i.serviceItemId,
-                  'isCustom': i.isCustom,
-                  'isFromCustomerSelection': i.isFromCustomer,
-                })
+            .map(
+              (i) => {
+                'name': i.name,
+                'price': i.price,
+                'quantity': i.quantity,
+                'serviceItemId': i.serviceItemId,
+                'isCustom': i.isCustom,
+                'isFromCustomerSelection': i.isFromCustomer,
+              },
+            )
             .toList(),
         laborCost: _laborCost,
         surcharge: _surcharge,
@@ -177,10 +181,7 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Lỗi: $e'),
-            backgroundColor: AppColors.error,
-          ),
+          SnackBar(content: Text('Lỗi: $e'), backgroundColor: AppColors.error),
         );
       }
     } finally {
@@ -216,8 +217,11 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.build_rounded,
-                        color: AppColors.primary, size: 20),
+                    const Icon(
+                      Icons.build_rounded,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -271,8 +275,11 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                 ),
                 child: const Column(
                   children: [
-                    Icon(Icons.inventory_2_outlined,
-                        size: 40, color: AppColors.textTertiary),
+                    Icon(
+                      Icons.inventory_2_outlined,
+                      size: 40,
+                      color: AppColors.textTertiary,
+                    ),
                     SizedBox(height: 8),
                     Text(
                       'Chưa có mục nào',
@@ -300,8 +307,9 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                           children: [
                             Text(
                               item.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             Text(
                               '${_formatCurrency(item.price)} x ${item.quantity}',
@@ -323,8 +331,11 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                       const SizedBox(width: 8),
                       IconButton(
                         onPressed: () => _removeItem(index),
-                        icon: const Icon(Icons.delete_outline,
-                            color: AppColors.error, size: 20),
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: AppColors.error,
+                          size: 20,
+                        ),
                       ),
                     ],
                   ),
@@ -344,10 +355,13 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
               prefixIcon: const Icon(Icons.handyman_outlined, size: 20),
               suffixIcon: const Padding(
                 padding: EdgeInsets.only(right: 12),
-                child: Text('VNĐ',
-                    style: TextStyle(
-                        color: AppColors.textTertiary,
-                        fontWeight: FontWeight.w600)),
+                child: Text(
+                  'VNĐ',
+                  style: TextStyle(
+                    color: AppColors.textTertiary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
 
@@ -364,10 +378,13 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
               prefixIcon: const Icon(Icons.add_circle_outline, size: 20),
               suffixIcon: const Padding(
                 padding: EdgeInsets.only(right: 12),
-                child: Text('VNĐ',
-                    style: TextStyle(
-                        color: AppColors.textTertiary,
-                        fontWeight: FontWeight.w600)),
+                child: Text(
+                  'VNĐ',
+                  style: TextStyle(
+                    color: AppColors.textTertiary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
 
@@ -433,8 +450,11 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.info_outline,
-                            size: 18, color: AppColors.warning),
+                        Icon(
+                          Icons.info_outline,
+                          size: 18,
+                          color: AppColors.warning,
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           'Ghi chú thay đổi',
@@ -473,8 +493,11 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
                   if (_surcharge > 0) _buildSummaryRow('Phụ phí', _surcharge),
                   const Divider(height: 24),
                   _buildSummaryRow('Tạm tính', _totalCost),
-                  _buildSummaryRow('Phí nền tảng (10%)', _platformFee,
-                      isSubtle: true),
+                  _buildSummaryRow(
+                    'Phí nền tảng (10%)',
+                    _platformFee,
+                    isSubtle: true,
+                  ),
                   const Divider(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -536,8 +559,9 @@ class _CreateQuoteScreenState extends State<CreateQuoteScreen> {
           Text(
             label,
             style: TextStyle(
-              color:
-                  isSubtle ? AppColors.textTertiary : AppColors.textSecondary,
+              color: isSubtle
+                  ? AppColors.textTertiary
+                  : AppColors.textSecondary,
               fontSize: isSubtle ? 13 : 14,
             ),
           ),
@@ -606,11 +630,13 @@ class _AddItemSheetState extends State<_AddItemSheet> {
       return;
     }
 
-    widget.onAdd(QuoteItem(
-      name: _nameController.text,
-      price: int.tryParse(_priceController.text) ?? 0,
-      quantity: int.tryParse(_quantityController.text) ?? 1,
-    ));
+    widget.onAdd(
+      QuoteItem(
+        name: _nameController.text,
+        price: int.tryParse(_priceController.text) ?? 0,
+        quantity: int.tryParse(_quantityController.text) ?? 1,
+      ),
+    );
     Navigator.pop(context);
   }
 
@@ -633,10 +659,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
         children: [
           const Text(
             'Thêm mục dịch vụ / linh kiện',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 20),
           MinTextField(
@@ -668,11 +691,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
             ],
           ),
           const SizedBox(height: 24),
-          MinButton(
-            text: 'Thêm',
-            isFullWidth: true,
-            onPressed: _add,
-          ),
+          MinButton(text: 'Thêm', isFullWidth: true, onPressed: _add),
         ],
       ),
     );
