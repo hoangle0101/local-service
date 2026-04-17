@@ -7,7 +7,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import helmet from 'helmet';
+// import helmet from 'helmet'; // Uncomment after: pnpm add helmet
 
 // Fix BigInt serialization globally
 BigInt.prototype['toJSON'] = function () {
@@ -20,8 +20,8 @@ async function bootstrap() {
   try {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-    // Security: Add helmet middleware for security headers
-    app.use(helmet());
+    // Security: Add helmet middleware for security headers (requires: pnpm add helmet)
+    // app.use(helmet());
 
     app.enableCors();
 
