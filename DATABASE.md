@@ -1242,10 +1242,3 @@ Database này được thiết kế để:
 
 **28 bảng** được tổ chức thành **7 module** rõ ràng, mỗi module đảm nhiệm một phần nghiệp vụ cụ thể.
 
----
-
-**Version:** 2.0  
-**Last Updated:** 2025-01-16  
-**Author:** Local Service Platform Team
-
-
