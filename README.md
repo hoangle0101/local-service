@@ -4,26 +4,9 @@ Chào mừng team! Đây là kho lưu trữ (monorepo) chính cho dự án của
 
 ## 🚀 Tổng quan Dự án
 
-Dự án này là một nền tảng **Web3** kết nối người dân địa phương (cần sửa chữa, dọn dẹp...) với các nhà cung cấp dịch vụ (thợ).
-
-Chúng ta sử dụng **Blockchain (Hợp đồng Thông minh)** để giải quyết vấn đề cốt lõi về **lòng tin**, thông qua:
-
 1.  **Thanh toán Tạm giữ (Escrow):** Tiền của khách được khóa an toàn trong Smart Contract và chỉ tự động nhả cho thợ khi cả hai bên xác nhận công việc hoàn thành.
 2.  **Đánh giá Bất biến:** Các đánh giá (review) được ghi lên blockchain, đảm bảo tính minh bạch, không thể sửa đổi hoặc xóa bỏ.
 3.  **Chứng chỉ NFT:** Thợ được xác thực sẽ được cấp một NFT chứng chỉ, tăng độ tin cậy.
-
-## 🛠️ Cấu trúc Công nghệ (Tech Stack)
-
-| Hạng mục       | Công nghệ                         | Thư mục               | Phụ trách            |
-| :------------- | :-------------------------------- | :-------------------- | :------------------- |
-| **Backend**    | **NestJS** (Node.js, TypeScript)  | `apps/api`            | @_TênBackendLead_    |
-| **Mobile App** | **React Native** (TypeScript)     | `apps/mobile`         | @_TênFrontendLead_   |
-| **Admin Web**  | **Next.js** (TypeScript)          | `apps/admin`          | @_TênFrontendLead_   |
-| **Blockchain** | **Solidity** (Hardhat, Ethers.js) | `apps/api` (Tích hợp) | @_TênBlockchainLead_ |
-| **Database**   | **PostgreSQL** + **PostGIS**      | `apps/api`            | @_TênBackendLead_    |
-| **Code Chung** | TypeScript Interfaces             | `packages/types`      | Cả 3 thành viên      |
-
----
 
 ## 🏗️ Cấu trúc Monorepo
 
