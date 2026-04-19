@@ -27,49 +27,7 @@ import { Roles } from '../../common/decorators/roles.decorator';
 export class ServicesController {
   constructor(private servicesService: ServicesService) { }
 
-  // ==================== CATEGORY ENDPOINTS ====================
 
-  @Get('categories')
-  @ApiOperation({ summary: 'Get all categories (tree structure)' })
-  async getCategories() {
-    return this.servicesService.getCategories();
-  }
-
-  @Get('categories/:id')
-  @ApiOperation({ summary: 'Get category by ID' })
-  async getCategoryById(@Param('id') id: string) {
-    return this.servicesService.getCategoryById(parseInt(id));
-  }
-
-  @Post('categories')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin', 'super_admin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Admin: Create category' })
-  async createCategory(@Body() dto: CreateCategoryDto) {
-    return this.servicesService.createCategory(dto);
-  }
-
-  @Put('categories/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin', 'super_admin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Admin: Update category' })
-  async updateCategory(
-    @Param('id') id: string,
-    @Body() dto: UpdateCategoryDto,
-  ) {
-    return this.servicesService.updateCategory(parseInt(id), dto);
-  }
-
-  @Delete('categories/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin', 'super_admin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Admin: Delete category' })
-  async deleteCategory(@Param('id') id: string) {
-    return this.servicesService.deleteCategory(parseInt(id));
-  }
 
   // ==================== SERVICE ENDPOINTS ====================
 
